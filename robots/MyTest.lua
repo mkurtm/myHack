@@ -1,28 +1,32 @@
-dofile("../hacktrade.lua")
+dofile(getScriptPath().."\\hacktrade.lua")
 
 function Robot()
 
     feed = MarketData{
-        market="QJSIM",
-        ticker="SBER",
+        market="SPBFUT",
+        ticker="RIU7",
     }
 
     order = SmartOrder{
-        account="NL0011100043",
-        client="74808",
-        market="QJSIM",
-        ticker="SBER",
+        account="SPBFUT00Z43",
+        client="SPBFUT00Z43",
+        market="SPBFUT",
+        ticker="RIU7",
     }
 
-    ind = Indicator{
-        tag="MAVG",
+    riu = Indicator{
+        tag="riu",
+    }
+
+	sma = Indicator{
+        tag="sma",
     }
     
     size = 1
 
     while true do
-        if feed.last > ind[-1] then
-          order:update(feed.last, size)
+        if riu.closes_0[-1] > riu.opens_0[-1] then
+          order:update(feed.offers, size)
         else
           order:update(feed.last, -size)
         end
